@@ -1,0 +1,10 @@
+{
+  "name": "ARDIG",
+  "main": "index.html",
+  "window": {
+    "toolbar": true,
+    "width": 400,
+    "height": 800,
+    "icon": "img/logo.png"
+  }
+}

@@ -1,49 +1,324 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+<head>
+    <meta charset="iso-8859-1" />
+    <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' http://104.131.40.56:5984 data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"  />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-combobox.css"  />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-switch.min.css" />
+    <!--link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" /-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="css/star-rating.min.css" />
+
+    <link href="css/theme.css" rel="stylesheet">
+    <!--link rel="stylesheet" type="text/css" href="css/index.css" /-->
+
+    <title>marke3</title>
+</head>
+<body role="document">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!--img src="img/quito-negro.png" width="100" height="30"-->
+        <a class="navbar-brand" style="margin-left:10px;padding-left:110px;background-image:url(img/marke3_blanco.png);background-repeat: no-repeat;background-position: left center;" href="#"><!--img src="img/marke3.png"--> <span id="online_offline" style="text-align:center;display:none;xxxdisplay:inline-block;width:100px;background-color:#663;color:#996;margin-left:5px;border-radius:10px 10px;">Iniciando</span></a>
+        <a id="url_ultima_version"  class="navbar-brand" style="display:none;margin-left:10px;" href="#" xxxonclick="location.href = this.href;return false;" onclick="gui.Shell.openExternal(this.href);return false;" ><span id="online_offline" style="text-align:center;display:inline-block;width:250px;background-color:#FF0;color:#000;margin-left:5px;border-radius:10px 10px;">descargar nueva versión</span></a>
+        <a id="sin_inicializar"  class="navbar-brand" style="display:none;margin-left:10px;" href="#" onclick="return false;" xxxonclick="gui.Shell.openExternal(this.href);return false;" ><span id="online_offline" style="text-align:center;display:inline-block;width:150px;background-color:#a40;color:#FFF;margin-left:5px;border-radius:10px 10px;">sin inicializar</span></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+
+          <!--li id="menu_usuarios" style="display:none;"><a href="#" onclick="p_usuarios();"><span class="glyphicon glyphicon-pawn" aria-hidden="true"></span> Usuarios</a></li-->
+
+          <li id="menu_registro" style="display:none;"><a href="#" onclick="p_registro();"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Registro</a></li>
+
+          <li id="menu_usuario" style="display:none;" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span id="menu_usuario_nombre">Usuario</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#cambiar_clave" onclick="p_cambio_clave();">Cambiar clave de usuario</a></li>
+              <li class="divider"></li>
+              <li><a href="#salir" onclick="p_ingreso();"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Cerrar sesión</a></li>
+            </ul>
+          </li>
+
+          <!--li id="menu_salir" style="display:none;"><a href="#salir" onclick="p_ingreso();"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Cerrar sesión</a></li-->
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
+    <div class="app row" id="ingreso" style="display:none;" >
+      <div class="col-md-12">
+
+        <div class="panel panel-primary" xxxstyle="width:400px;margin:auto;">
+          <div class="panel-heading">
+            <h2 class="panel-title">Ingreso al Sistema</h2>
+          </div>
+          <div class="panel-body" style="text-align:right;">
+            <form onsubmit="p_iniciar_sesion_usuario();return false;" class="form-horizontal">
+              <div class="form-group">
+                <div class="col-md-12">
+                  <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                    <input id="usuario" class="form-control" placeholder="Usuario">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-12">
+                  <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                    <input id="clave" type="password" class="form-control" placeholder="Contraseña">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-6">
+                  <!--a href="#" onclick="p_recuperar();return false;">Recuperar contraseña</a-->
+                </div>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-lg btn-success" >Iniciar sesión <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+      </div>
+    </div>
+
+
+    <div id="registro" xxxstyle="display:none;" class="app">
+
+      <!--div class="alert alert-success" role="alert">
+        <strong><span id="usuario_msg">admin</span></strong> ha ingresado con éxito.
+      </div-->
+
+
+      <form id="fdatos" onsubmit="return false;" class="form-horizontal" data-toggle="validator" role="form">
+
+
+        <input name="form_usuario_nombre" id="form_usuario_nombre" type="hidden" alt="Operador que llenó el formulario"/>
+        <input name="form_usuario_id" id="form_usuario_id" type="hidden"/>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+          <div class="panel panel-default">
+
+            <div class="panel-heading" role="tab" id="headingEntrevistado">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEntrevistado" aria-expanded="true" aria-controls="collapseEntrevistado">
+                  Datos
+                </a>
+              </h4>
+            </div>
+
+            <div id="collapseEntrevistado" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEntrevistado">
+              <div class="panel-body">
+
+
+                <div class="form-group"><label class="control-label col-sm-2">RUC: </label><div class="col-sm-4"><input name="entrevistado_numero_documento" id="entrevistado_numero_documento" class="form-control"></div></div>
+                <div class="form-group"><label class="control-label col-sm-2">Valor: </label><div class="col-sm-4"><div class="input-group"><span class="input-group-addon">US$</span><input name="entrevistado_nombres" id="nombres" class="form-control"></div></div></div>
+                <div class="form-group"><label class="control-label col-sm-2">Calificación: </label><div class="col-sm-4"><input id="calificacion" type="number" class="rating" min=0 max=5 step=1 data-size="md" data-symbol="&#9733;" data-glyphicon="false" data-rating-class="rating-fa"></div></div>
+                <div id="galeria">
+                  <button id="tomar_foto" class="btn btn-primary" onclick="p_tomar_foto()"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Tomar foto de factura</button>
+                  <img id="imagen1" src="img/cara.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="form-group"><div class="col-sm-6"><!--button id="cancelar" value="cancelar" class="btn btn-lg btn-danger" onclick="p_cancelar_registro()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancelar</button--></div><div class="col-sm-6"><button id="guardar" value="registrar" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Registrar</button></div></div>
+
+      </form>
+
+
+    </div>
+
+
+    <div id="cambio_clave" style="display:none;" class="app">
+
+      <div id="cambio_clave_msg_urgente" class="alert alert-danger" role="alert" style="display:none;">
+        Por su seguridad, por favor cambie su clave de inmediato.
+      </div>
+
+      <form id="fclave" onsubmit="p_cambiar_clave();return false;" class="form-horizontal" data-toggle="validator" role="form">
+        <h2>Cambio de clave</h2>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+
+        <div class="form-group"><label class="control-label col-sm-2">Ingrese su clave actual: </label><div class="col-sm-4">
+          <input type="password" name="clave_actual" id="clave_actual" class="form-control">
+        </div></div>
+
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+
+        <div class="form-group"><label class="control-label col-sm-2">Ingrese su nueva clave: </label><div class="col-sm-4">
+          <input type="password" name="nueva_clave" id="nueva_clave" class="form-control" data-minlength="6" />
+          <span class="help-block">Mínimo 8 caracteres</span>
+        </div></div>
+
+        <div class="form-group"><label class="control-label col-sm-2">Repita su nueva clave: </label><div class="col-sm-4">
+          <input type="password" name="nueva_clave_2" id="nueva_clave_2" class="form-control" data-match="#nueva_clave" data-match-error="No coinciden ambos campos." />
+          <div class="help-block with-errors"></div>
+        </div></div>
+        <div class="form-group"><div class="col-sm-2">&nbsp;</div><div class="col-sm-4"><button id="boton_cambio_clave" type="submit" value="Siguiente pestaña" class="btn btn-lg btn-primary"><!--span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span-->Cambiar clave</button></div></div>
+      </form>
+    </div>
+
+
+  </div>
+
+
+  <footer class="footer">
+    <div class="container">
+      <!--p class="text-muted" style="padding-top:10px;text-align:center;">JYBARO<br>Año 2015</p-->
+      <!--a href="#" onclick="p_display('log', true);return false;" style="color:#AAA;">Ver registro del sistema</a-->
+    </div>
+    <div class="text-muted" style="font-size:10px;position:absolute;bottom:5px;left:5px;">
+      Versión 1.<span id="version_etiqueta">0</span>
+    </div>
+    <div style="position:absolute;bottom:5px;right:5px;">
+      <a href="#" onclick="gui.Shell.openExternal('http://www.jybaro.com');return false;"><img src="img/jybaro_creado_por.png" title="creado por JYBARO"></a>
+    </div>
+  </footer>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="vmodal" tabindex="-1" role="dialog" aria-labelledby="vmodal_head" aria-hidden="true">
+    <!--div class="modal-dialog modal-lg"-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="vmodal_head">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid" id="vmodal_body"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" id="boton_reimprimir"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Reimprimir resumen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="vm_confirmar_guardado" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Confirmación de guardado</h4>
+        </div>
+        <div class="modal-body">
+          <p>Luego de guardar el formulario, no lo podrá volver a cambiar. Se registrará en el servidor y los datos se mostrarán en el mapa.</p>
+          <p><strong>¿Seguro desea guardar este formulario de forma definitiva?</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="boton_guardar"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar formulario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="vm_confirmar_salida" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Confirmación de salir del formulario</h4>
+        </div>
+        <div class="modal-body">
+          <p>Si realiza esta acción, perderá todos los datos que no hayan sido guardados.</p>
+          <p><strong>¿Seguro desea salir de este formulario sin guardarlo?</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="boton_salir"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Salir del formulario sin guardarlo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="vm_bloqueado" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    &nbsp;
+  </div>
+
+
+  <div class="modal fade" id="vm_alerta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Alerta</h4>
+        </div>
+        <div class="modal-body" id="vm_alerta_mensaje">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript" src="js/pouchdb-3.6.0.min.js"></script>
+  <!--script type="text/javascript" src="js/pouchdb.transform-pouch.min.js"></script-->
+
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/moment.min.js"></script>
+  <script type="text/javascript" src="js/moment_locale_es.js"></script>
+
+
+  <script type="text/javascript" src="js/jquery.serialize-object.min.js"></script>
+
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-combobox.js"></script>
+  <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+  <script type="text/javascript" src="js/bootstrap-switch.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datepicker.es.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap3-typeahead.min.js"></script>
+  <script type="text/javascript" src="js/daterangepicker.js"></script>
+
+
+  <script type="text/javascript" src="js/validator.min.js"></script>
+
+  <script type="text/javascript" src="js/d3.min.js"></script>
+
+  <script type="text/javascript" src="js/md5.min.js"></script>
+  <script type="text/javascript" src="js/hashids.min.js"></script>
+
+
+  <script type="text/javascript" src="js/map.js" charset="UTF-8"></script>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/star-rating.min.js"></script>
+  <script type="text/javascript" src="js/index.js" charset="UTF-8"></script>
+
+
+
+</body>
 </html>
